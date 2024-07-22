@@ -11,11 +11,12 @@ namespace TE_trsprt_remake.Data
         public DbSet<Plant> Plants { get; set; }
         public DbSet<Departement> Departements { get; set; }
         public DbSet<Building> Buildings { get; set; }
-        public DbSet<SAP> SAPs { get; set; }
+        public DbSet<Car> Cars { get; set; }
 
 
 
 
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>(entity =>
