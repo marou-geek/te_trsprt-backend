@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TE_trsprt_remake.Data;
 
@@ -10,9 +11,11 @@ using TE_trsprt_remake.Data;
 namespace TE_trsprt_remake.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240722134305_ModifiedCarTable")]
+    partial class ModifiedCarTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -20,6 +23,23 @@ namespace TE_trsprt_remake.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("TE_trsprt_remake.Models.Building", b =>
+                {
+                    b.Property<int>("BuildingId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BuildingId"));
+
+                    b.Property<string>("BuildingName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("BuildingId");
+
+                    b.ToTable("Buildings");
+                });
 
             modelBuilder.Entity("TE_trsprt_remake.Models.Car", b =>
                 {
@@ -79,9 +99,8 @@ namespace TE_trsprt_remake.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("BuildingId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("BuildingId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Location")
                         .IsRequired()
@@ -96,6 +115,8 @@ namespace TE_trsprt_remake.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BuildingId");
 
                     b.ToTable("Plants");
                 });
@@ -162,6 +183,17 @@ namespace TE_trsprt_remake.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("TE_trsprt_remake.Models.Plant", b =>
+                {
+                    b.HasOne("TE_trsprt_remake.Models.Building", "Building")
+                        .WithMany("Plants")
+                        .HasForeignKey("BuildingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Building");
+                });
+
             modelBuilder.Entity("TE_trsprt_remake.Models.User", b =>
                 {
                     b.HasOne("TE_trsprt_remake.Models.Departement", "Departement")
@@ -179,6 +211,11 @@ namespace TE_trsprt_remake.Migrations
                     b.Navigation("Departement");
 
                     b.Navigation("Plant");
+                });
+
+            modelBuilder.Entity("TE_trsprt_remake.Models.Building", b =>
+                {
+                    b.Navigation("Plants");
                 });
 
             modelBuilder.Entity("TE_trsprt_remake.Models.Departement", b =>

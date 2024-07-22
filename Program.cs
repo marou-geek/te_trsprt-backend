@@ -34,6 +34,10 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IDepartementService, DepartementService>();
+builder.Services.AddScoped<IPlantService, PlantService>();
+
+
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
 
