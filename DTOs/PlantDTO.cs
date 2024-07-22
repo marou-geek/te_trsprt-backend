@@ -1,22 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using TE_trsprt_remake.Models;
 
-namespace TE_trsprt_remake.Models
+namespace TE_trsprt_remake.DTOs
 {
-    public class Plant
+    public class PlantDTO
     {
-        [Key]
         public int Id { get; set; }
         public string Location { get; set; }
         public string SiteManagerEmail { get; set; }
         public string SAPId { get; set; }
-
         public string BuildingId { get; set; }
-
-        public virtual ICollection<User> Users { get; set; }
-
-
-
-
     }
 }

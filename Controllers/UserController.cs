@@ -18,6 +18,13 @@ namespace TE_trsprt_remake.Controllers
             _userservice = userservice;
         }
 
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
+        {
+            var users = await _userservice.GetUsers();
+            return Ok(users);
+        }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(long id)
         {
@@ -31,13 +38,6 @@ namespace TE_trsprt_remake.Controllers
             {
                 return NotFound();
             }
-        }
-
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
-        {
-            var users = await _userservice.GetUsers();
-            return Ok(users);
         }
 
 
@@ -91,6 +91,7 @@ namespace TE_trsprt_remake.Controllers
             }
         }
 
+
         [HttpPost]
         public async Task<IActionResult> AddUser(UserDTO userDto)
         {
@@ -102,9 +103,6 @@ namespace TE_trsprt_remake.Controllers
 
             return NoContent();
         }
-
-
-
 
     }
 }
