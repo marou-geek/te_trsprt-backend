@@ -1,36 +1,36 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using TE_trsprt_remake.Data;
 using TE_trsprt_remake.DTOs;
 using TE_trsprt_remake.Models;
 using TE_trsprt_remake.Services;
 
+
 namespace TE_trsprt_remake.Controllers
 {
-    [ApiController]
     [Route("api/[controller]")]
-    public class DepartementController : ControllerBase
+    [ApiController]
+    public class CarController : ControllerBase
     {
         private readonly AppDbContext _context;
-        private readonly IDepartementService _depservice;
+        private readonly ICarService _carservice;
 
 
-        public DepartementController(AppDbContext context , IDepartementService depservice)
+        public CarController(AppDbContext context, ICarService carservice)
         {
             _context = context;
-            _depservice = depservice;
+            _carservice = carservice;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Departement>>> GetDepartements()
+        public async Task<ActionResult<IEnumerable<Car>>> GetDepartements()
         {
-            return await _depservice.GetDepartements();
+            return await _carservice.GetCars();
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddDepartement(DepartementDTO depDto)
+        public async Task<IActionResult> AddCar(CarDTO carDto)
         {
-            var result = await _depservice.AddDepartement(depDto);
+            var result = await _carservice.AddCar(carDto);
             if (!result)
             {
                 return BadRequest();
@@ -40,10 +40,10 @@ namespace TE_trsprt_remake.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser(long id)
+        public async Task<IActionResult> DeleteCar(long id)
         {
 
-            bool isDeleted = await _depservice.DeleteDepartement(id);
+            bool isDeleted = await _carservice.DeleteCar(id);
             if (isDeleted)
             {
                 return NoContent();
@@ -56,14 +56,14 @@ namespace TE_trsprt_remake.Controllers
 
         [HttpPut("{id}")]
 
-        public async Task<IActionResult> UpdateDepartement(long id, [FromBody] DepartementDTO depDto)
+        public async Task<IActionResult> UpdateCar(long id, [FromBody] CarDTO car)
         {
-            if (depDto == null)
+            if (car == null)
             {
                 return BadRequest("Departement data is null.");
             }
 
-            bool isUpdated = await _depservice.UpdateDepartement(depDto, id);
+            bool isUpdated = await _carservice.UpdateCar(car, id);
             if (isUpdated)
             {
                 return NoContent();
@@ -73,6 +73,5 @@ namespace TE_trsprt_remake.Controllers
                 return NotFound();
             }
         }
-
     }
 }

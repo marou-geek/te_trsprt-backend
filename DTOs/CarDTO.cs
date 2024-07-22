@@ -1,13 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace TE_trsprt_remake.Models
+namespace TE_trsprt_remake.DTOs
 {
-    public class Car
+    public class CarDTO
     {
-        [Key]
         public int Id { get; set; }
 
-        [Required]
         public string Brand { get; set; }
 
         public string Type { get; set; }
@@ -17,7 +15,5 @@ namespace TE_trsprt_remake.Models
         public string PlantId { get; set; }
 
         public string Condition { get; set; }
-
-
     }
 }
