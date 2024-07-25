@@ -73,7 +73,6 @@ namespace TE_trsprt_remake.Services
             existingUser.SvEmail = user.SvEmail;
             existingUser.PlantId = user.PlantId;
             existingUser.DepartementId = user.DepartementId;
-            existingUser.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
             existingUser.AccountStatus = user.AccountStatus;
             existingUser.Address = user.Address;
             existingUser.Role = user.Role;
@@ -91,7 +90,7 @@ namespace TE_trsprt_remake.Services
                 Title = userDto.Title,
                 Email = userDto.Email,
                 SvEmail = userDto.SvEmail,
-                PlantId = userDto.PlantId,
+                PlantId = userDto.PlantId,  
                 DepartementId = userDto.DepartementId,
                 Password = BCrypt.Net.BCrypt.HashPassword(userDto.Password),
                 AccountStatus = userDto.AccountStatus,

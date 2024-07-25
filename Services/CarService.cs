@@ -6,7 +6,7 @@ using TE_trsprt_remake.Models;
 
 namespace TE_trsprt_remake.Services
 {
-    public class CarService
+    public class CarService  : ICarService 
     {
         private readonly AppDbContext _context;
 
@@ -29,6 +29,7 @@ namespace TE_trsprt_remake.Services
                 LicensePlate = car.LicensePlate,
                 PlantId = car.PlantId,
                 Condition = car.Condition,
+                Transmission = car.Transmission
             };
 
             _context.Cars.Add(c);
@@ -61,6 +62,7 @@ namespace TE_trsprt_remake.Services
             existingcar.Type = car.Type;
             existingcar.LicensePlate = car.LicensePlate;
             existingcar.PlantId = car.PlantId;
+            existingcar.Transmission = car.Transmission;
             existingcar.Condition = car.Condition;
             await _context.SaveChangesAsync();
             return true;

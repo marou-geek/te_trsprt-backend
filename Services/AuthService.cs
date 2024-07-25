@@ -68,9 +68,14 @@ namespace TE_trsprt_remake.Services
             var authClaims = new[]
             {
                 new Claim(JwtRegisteredClaimNames.Sub, user.Email),
-                new Claim(ClaimTypes.Name, user.FullName)
+                new Claim(ClaimTypes.Name, user.FullName),
+                new Claim(ClaimTypes.Role, user.Role),
+                new Claim("Title",user.Title),
+                new Claim("TEId",user.TE_Id),
+                new Claim ("SvEmail",user.SvEmail),
+                new Claim("Status",user.AccountStatus)
             };
-
+                
             var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Secret"]));
 
             var token = new JwtSecurityToken(
