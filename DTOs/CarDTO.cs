@@ -10,6 +10,8 @@ namespace TE_trsprt_remake.DTOs
 
         public string Type { get; set; }
 
+        public string Transmission { get; set; }
+
         public string LicensePlate { get; set; }
 
         public string PlantId { get; set; }

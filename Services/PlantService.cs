@@ -24,7 +24,10 @@ namespace TE_trsprt_remake.Services
         {
             var pl = new Plant
             {
-               Location = plant.Location
+               Location = plant.Location,
+               SAPId = plant.SAPId,
+               BuildingId = plant.BuildingId,
+               SiteManagerEmail = plant.SiteManagerEmail,
             };
 
             _context.Plants.Add(pl);
