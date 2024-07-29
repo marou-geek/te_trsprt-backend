@@ -33,6 +33,8 @@ namespace TE_trsprt_remake.Models
         public virtual Plant Plant { get; set; }
         public virtual Departement Departement { get; set; }
 
+        public virtual ICollection<Request> Requests { get; set; }
+
 
     }
 }

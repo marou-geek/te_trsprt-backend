@@ -37,6 +37,8 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IDepartementService, DepartementService>();
 builder.Services.AddScoped<IPlantService, PlantService>();
 builder.Services.AddScoped<ICarService, CarService>();
+builder.Services.AddScoped<IRequestService, RequestService>();
+
 
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();

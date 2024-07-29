@@ -47,11 +47,11 @@ namespace TE_trsprt_remake.Services
                 Title = model.Title,
                 Password = BCrypt.Net.BCrypt.HashPassword(model.Password),
                 Email = model.Email,
-                SvEmail = model.SvEmail,
+                SvEmail = "",
                 PlantId = model.PlantId,
                 DepartementId = model.DepartementId,
                 AccountStatus = "pending",
-                Address = model.Address,
+                Address = model.Address,    
                 Role = "user"
             };
 

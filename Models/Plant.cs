@@ -7,6 +7,7 @@ namespace TE_trsprt_remake.Models
     {
         [Key]
         public int Id { get; set; }
+
         public string Location { get; set; }
         public string SiteManagerEmail { get; set; }
         public string SAPId { get; set; }

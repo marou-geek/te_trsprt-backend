@@ -20,5 +20,8 @@ namespace TE_trsprt_remake.Models
 
         public string Condition { get; set; }
 
+        public virtual ICollection<Request> Requests { get; set; }
+
+
     }
 }
