@@ -26,6 +26,7 @@ namespace TE_trsprt_remake.Models
         public string AccountStatus { get; set; }
         public string Address { get; set; }
         public string Role { get; set; }
+        public DateTime CreatedAt { get; set; }
         public virtual Plant Plant { get; set; }
         public virtual Departement Departement { get; set; }
         public virtual ICollection<Request> Requests { get; set; }
