@@ -70,10 +70,14 @@ namespace TE_trsprt_remake.Services
                 new Claim(JwtRegisteredClaimNames.Sub, user.Email),
                 new Claim(ClaimTypes.Name, user.FullName),
                 new Claim(ClaimTypes.Role, user.Role),
+                new Claim("Id", user.Id.ToString()),   
                 new Claim("Title",user.Title),
                 new Claim("TEId",user.TE_Id),
                 new Claim ("SvEmail",user.SvEmail),
-                new Claim("Status",user.AccountStatus)
+                new Claim("Status",user.AccountStatus),
+                new Claim("Plant",user.PlantId.ToString()),
+                new Claim("Departement",user.DepartementId.ToString())
+
             };
                 
             var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Secret"]));

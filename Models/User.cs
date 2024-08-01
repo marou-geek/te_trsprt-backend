@@ -13,28 +13,22 @@ namespace TE_trsprt_remake.Models
         public string TE_Id { get; set; }
         public string FullName { get; set; }
         public string Title { get; set; }
-
         public string SvEmail { get; set; }
-
-
         [Required]
-        public string Email { get; set; }
+        public string Email { get; set; } 
 
         [ForeignKey("Plant")]
         public int PlantId { get; set; }
 
         [ForeignKey("Departement")]
         public int DepartementId { get; set; }
-
         public string Password { get; set; }
         public string AccountStatus { get; set; }
         public string Address { get; set; }
         public string Role { get; set; }
         public virtual Plant Plant { get; set; }
         public virtual Departement Departement { get; set; }
-
         public virtual ICollection<Request> Requests { get; set; }
-
 
     }
 }
