@@ -14,9 +14,11 @@
         public string Role { get; set; }
         public string Title { get; set; }
         public string Password { get; set; }
+        public DateTime CreatedAt { get; set; }
         public int PlantId { get; set; }
         public int DepartementId { get; set; }
         public string Address { get; set; }
 
     }
 }
+

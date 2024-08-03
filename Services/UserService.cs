@@ -103,5 +103,12 @@ namespace TE_trsprt_remake.Services
             return true;
         }
 
+        public async Task<IEnumerable<User>> GetPendingUsersAsync()
+        {
+            return await _context.Users
+                .Where(u => u.AccountStatus == "pending")
+                .ToListAsync();
+        }
+
     }
 }
