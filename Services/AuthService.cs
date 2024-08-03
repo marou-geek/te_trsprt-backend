@@ -37,9 +37,6 @@ namespace TE_trsprt_remake.Services
             var userExists = await _context.Users.AnyAsync(u => u.TE_Id == model.TE_Id);
             if (userExists)
                 return null;
-
-           
-
             var user = new User
             {
                 TE_Id = model.TE_Id,
@@ -52,8 +49,10 @@ namespace TE_trsprt_remake.Services
                 DepartementId = model.DepartementId,
                 AccountStatus = "pending",
                 Address = model.Address,    
-                Role = "user"
+                Role = "user",
+                CreatedAt = DateTime.Now
             };
+
 
             _context.Users.Add(user);
             await _context.SaveChangesAsync();

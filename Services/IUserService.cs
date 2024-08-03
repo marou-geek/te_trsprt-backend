@@ -12,7 +12,7 @@ namespace TE_trsprt_remake.Services
         Task<ActionResult<IEnumerable<User>>> GetUsers();
         Task<bool> UpdateUser(UserDTO user, long id);
         Task<bool> DeleteUser (long id);
-
+        Task<IEnumerable<User>> GetPendingUsersAsync();
         Task<bool> AddUser(UserDTO user);
 
     }
