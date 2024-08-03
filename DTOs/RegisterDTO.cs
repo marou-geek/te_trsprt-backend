@@ -12,6 +12,9 @@ namespace TE_trsprt_remake.DTOs
         public string Email { get; set; }
 
         public string SvEmail { get; set; }
+
+        public DateTime CreatedAt { get; set; }
+
         public int PlantId { get; set; }
         public int DepartementId { get; set; }
         public string Address { get; set; }
