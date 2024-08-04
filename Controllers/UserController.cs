@@ -104,5 +104,12 @@ namespace TE_trsprt_remake.Controllers
             return NoContent();
         }
 
+        [HttpGet("pending")]
+        public async Task<IActionResult> GetPendingUsers()
+        {
+            var pendingUsers = await _userservice.GetPendingUsersAsync();
+            return Ok(pendingUsers);
+        }
+
     }
 }
