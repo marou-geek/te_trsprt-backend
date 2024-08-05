@@ -66,13 +66,13 @@ namespace TE_trsprt_remake.Services
         {
             var authClaims = new[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, user.Email),
                 new Claim(ClaimTypes.Name, user.FullName),
                 new Claim(ClaimTypes.Role, user.Role),
                 new Claim("Id", user.Id.ToString()),   
                 new Claim("Title",user.Title),
                 new Claim("TEId",user.TE_Id),
                 new Claim ("SvEmail",user.SvEmail),
+                new Claim ("Email",user.Email),
                 new Claim("Status",user.AccountStatus),
                 new Claim("Plant",user.PlantId.ToString()),
                 new Claim("Departement",user.DepartementId.ToString())
