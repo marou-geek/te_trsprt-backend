@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using TE_trsprt_remake.Data;
 using TE_trsprt_remake.DTOs;
 using TE_trsprt_remake.Models;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace TE_trsprt_remake.Services
 {
@@ -18,7 +20,7 @@ namespace TE_trsprt_remake.Services
 
         public async Task<bool> DeleteUser(long id)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u=>u.Id == id);
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
             if (user == null)
             {
                 return false;
@@ -26,7 +28,6 @@ namespace TE_trsprt_remake.Services
             _context.Users.Remove(user);
             await _context.SaveChangesAsync();
             return true;
-
         }
 
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
@@ -67,15 +68,27 @@ namespace TE_trsprt_remake.Services
             }
 
             existingUser.TE_Id = user.TE_Id;
-            existingUser.FullName = user.FullName ;
+            existingUser.FullName = user.FullName;
             existingUser.Title = user.Title;
             existingUser.Email = user.Email;
             existingUser.SvEmail = user.SvEmail;
-            existingUser.PlantId = user.PlantId;
             existingUser.DepartementId = user.DepartementId;
             existingUser.AccountStatus = user.AccountStatus;
             existingUser.Address = user.Address;
             existingUser.Role = user.Role;
+
+            var existingUserPlants = _context.UserPlants.Where(up => up.UserId == (int)id);
+            _context.UserPlants.RemoveRange(existingUserPlants);
+
+            foreach (var plantId in user.PlantIds)
+            {
+                var userPlant = new UserPlant
+                {
+                    UserId = (int)id,
+                    PlantId = plantId
+                };
+                _context.UserPlants.Add(userPlant);
+            }
 
             await _context.SaveChangesAsync();
             return true;
@@ -90,15 +103,26 @@ namespace TE_trsprt_remake.Services
                 Title = userDto.Title,
                 Email = userDto.Email,
                 SvEmail = userDto.SvEmail,
-                PlantId = userDto.PlantId,  
-                DepartementId = userDto.DepartementId,
                 Password = BCrypt.Net.BCrypt.HashPassword(userDto.Password),
                 AccountStatus = userDto.AccountStatus,
                 Address = userDto.Address,
-                Role = userDto.Role
+                Role = userDto.Role,
+                CreatedAt = DateTime.Now
             };
 
             _context.Users.Add(user);
+            await _context.SaveChangesAsync();
+
+            foreach (var plantId in userDto.PlantIds)
+            {
+                var userPlant = new UserPlant
+                {
+                    UserId = user.Id,
+                    PlantId = plantId
+                };
+                _context.UserPlants.Add(userPlant);
+            }
+
             await _context.SaveChangesAsync();
             return true;
         }
@@ -110,6 +134,5 @@ namespace TE_trsprt_remake.Services
                 .OrderByDescending(u => u.CreatedAt)
                 .ToListAsync();
         }
-
     }
 }
