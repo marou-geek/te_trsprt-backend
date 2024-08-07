@@ -17,5 +17,9 @@ namespace TE_trsprt_remake.Models
         public string BuildingId { get; set; }
 
         public virtual ICollection<UserPlant> UserPlants { get; set; } = new HashSet<UserPlant>();
+
+        public virtual ICollection<Car> Cars { get; set; } = new HashSet<Car>();
+
+
     }
 }
