@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TE_trsprt_remake.Models
 {
@@ -16,12 +17,14 @@ namespace TE_trsprt_remake.Models
 
         public string LicensePlate { get; set; }
 
-        public string PlantId { get; set; }
-
         public string Condition { get; set; }
 
         public virtual ICollection<Request> Requests { get; set; }
 
+        public int PlantId { get; set; }
+
+        [ForeignKey("PlantId")]
+        public virtual Plant Plant { get; set; }
 
     }
 }

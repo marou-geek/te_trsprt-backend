@@ -38,6 +38,10 @@ namespace TE_trsprt_remake.Services
             if (userExists)
                 return null;
 
+            var departementExists = await _context.Departements.AnyAsync(d => d.Id == model.DepartementId);
+            if (!departementExists)
+                return ("DepartementId does not exist.");
+
             var user = new User
             {
                 TE_Id = model.TE_Id,
@@ -46,6 +50,7 @@ namespace TE_trsprt_remake.Services
                 Password = BCrypt.Net.BCrypt.HashPassword(model.Password),
                 Email = model.Email,
                 SvEmail = "",
+                DepartementId = model.DepartementId,
                 AccountStatus = "pending",
                 Address = model.Address,
                 Role = "user",

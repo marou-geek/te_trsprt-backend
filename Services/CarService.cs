@@ -27,8 +27,8 @@ namespace TE_trsprt_remake.Services
                 Brand = car.Brand,
                 Type = car.Type,
                 LicensePlate = car.LicensePlate,
-                PlantId = car.PlantId,
                 Condition = car.Condition,
+                PlantId = car.PlantId,
                 Transmission = car.Transmission
             };
 
