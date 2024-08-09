@@ -81,7 +81,7 @@ namespace TE_trsprt_remake.Services
                 FromDate = requestDto.FromDate,
                 ToDate = requestDto.ToDate,
                 Raison = requestDto.Raison,
-                Status = requestDto.Status,
+                Status = "Pending",
                 FromDestination = requestDto.FromDestination,
                 ToDestination = requestDto.ToDestination,
                 CreatedAt = requestDto.CreatedAt
@@ -101,8 +101,8 @@ namespace TE_trsprt_remake.Services
                 {
                     ApproverId = Sv.Id,
                     RequestId = request.Id,
-                    Position = Sv.Title,
-                    Status = "SvPending",
+                    Position = "SV",
+                    Status = "SVPending",
                     Comment = "",
                     CreatedAt = request.CreatedAt,
                 };
