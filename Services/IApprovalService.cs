@@ -11,5 +11,10 @@ namespace TE_trsprt_remake.Services
         Task<bool> DeleteApproval(long id);
         Task<bool> AddApproval(ApprovalDTO approvalDto);
         Task<bool> SetApprovalStatus(string status, long id);
+        Task HandleSvRejected(int requestId);
+        Task HandleSvApproved(int requestId);
+        Task HandleHrRejected(int requestId);
+        Task HandleHrApproved(int requestId);
+        Task CreateHrApproval(int requestId);
     }
 }

@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using TE_trsprt_remake.DTOs;
 using TE_trsprt_remake.Models;
 using TE_trsprt_remake.Services;
@@ -52,7 +54,7 @@ namespace TE_trsprt_remake.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateRequest(long id,RequestDTO requestDto)
+        public async Task<IActionResult> UpdateRequest(long id, RequestDTO requestDto)
         {
             if (requestDto == null)
             {
@@ -71,7 +73,7 @@ namespace TE_trsprt_remake.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddRequest( RequestDTO requestDto)
+        public async Task<IActionResult> AddRequest(RequestDTO requestDto)
         {
             if (requestDto == null)
             {
