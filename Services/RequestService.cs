@@ -96,7 +96,7 @@ namespace TE_trsprt_remake.Services
                 var subject = "New Request Created";
                 var body = $"Dear {requester.FullName},<br><br>Your request has been created successfully.<br>Details:<br>From: {request.FromDestination}<br>To: {request.ToDestination}<br>From Date: {request.FromDate}<br>To Date: {request.ToDate}<br><br>Best regards,<br>Your Team";
                 await _emailService.SendEmailAsync(requester.SvEmail, subject, body);
-                var Sv = await _context.Users.FirstOrDefaultAsync(u => u.SvEmail == requester.SvEmail);
+                var Sv = await _context.Users.FirstOrDefaultAsync(u => u.Email == requester.SvEmail);
                 var Approval = new Approval
                 {
                     ApproverId = Sv.Id,
