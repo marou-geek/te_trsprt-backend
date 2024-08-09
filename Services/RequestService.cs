@@ -8,11 +8,14 @@ namespace TE_trsprt_remake.Services
 {
     public class RequestService : IRequestService
     {
-        private readonly AppDbContext _context;
 
-        public RequestService(AppDbContext context)
+        private readonly AppDbContext _context;
+        private readonly IEmailService _emailService;
+
+        public RequestService(AppDbContext context, IEmailService emailService)
         {
             _context = context;
+            _emailService = emailService;
         }
 
         public async Task<bool> DeleteRequest(long id)
@@ -86,6 +89,26 @@ namespace TE_trsprt_remake.Services
 
             _context.Requests.Add(request);
             await _context.SaveChangesAsync();
+
+            var requester = await _context.Users.FindAsync(request.RequesterId);
+            if (requester != null && !string.IsNullOrEmpty(requester.SvEmail))
+            {
+                var subject = "New Request Created";
+                var body = $"Dear {requester.FullName},<br><br>Your request has been created successfully.<br>Details:<br>From: {request.FromDestination}<br>To: {request.ToDestination}<br>From Date: {request.FromDate}<br>To Date: {request.ToDate}<br><br>Best regards,<br>Your Team";
+                await _emailService.SendEmailAsync(requester.SvEmail, subject, body);
+                var Sv = await _context.Users.FirstOrDefaultAsync(u => u.SvEmail == requester.SvEmail);
+                var Approval = new Approval
+                {
+                    ApproverId = Sv.Id,
+                    RequestId = request.Id,
+                    Position = Sv.Title,
+                    Status = "SvPending",
+                    Comment = "",
+                    CreatedAt = request.CreatedAt,
+                };
+                _context.Approvals.Add(Approval);
+                await _context.SaveChangesAsync();
+            }
             return true;
         }
     }
