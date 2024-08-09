@@ -38,6 +38,10 @@ builder.Services.AddScoped<IDepartementService, DepartementService>();
 builder.Services.AddScoped<IPlantService, PlantService>();
 builder.Services.AddScoped<ICarService, CarService>();
 builder.Services.AddScoped<IRequestService, RequestService>();
+builder.Services.AddScoped<IUserPlantService, UserPlantService>();
+builder.Services.AddScoped<IApprovalService, ApprovalService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
+
 
 
 builder.Services.AddControllers();

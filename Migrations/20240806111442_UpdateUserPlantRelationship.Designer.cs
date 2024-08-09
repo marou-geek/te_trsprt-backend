@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TE_trsprt_remake.Data;
 
@@ -11,9 +12,11 @@ using TE_trsprt_remake.Data;
 namespace TE_trsprt_remake.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240806111442_UpdateUserPlantRelationship")]
+    partial class UpdateUserPlantRelationship
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -80,8 +83,9 @@ namespace TE_trsprt_remake.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PlantId")
-                        .HasColumnType("int");
+                    b.Property<string>("PlantId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Transmission")
                         .IsRequired()
@@ -92,8 +96,6 @@ namespace TE_trsprt_remake.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PlantId");
 
                     b.ToTable("Cars");
                 });
@@ -226,6 +228,9 @@ namespace TE_trsprt_remake.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("PlantId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Role")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -248,6 +253,8 @@ namespace TE_trsprt_remake.Migrations
 
                     b.HasIndex("Email")
                         .IsUnique();
+
+                    b.HasIndex("PlantId");
 
                     b.ToTable("Users");
                 });
@@ -294,17 +301,6 @@ namespace TE_trsprt_remake.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("TE_trsprt_remake.Models.Car", b =>
-                {
-                    b.HasOne("TE_trsprt_remake.Models.Plant", "Plant")
-                        .WithMany("Cars")
-                        .HasForeignKey("PlantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Plant");
-                });
-
             modelBuilder.Entity("TE_trsprt_remake.Models.Request", b =>
                 {
                     b.HasOne("TE_trsprt_remake.Models.Car", "Car")
@@ -331,6 +327,10 @@ namespace TE_trsprt_remake.Migrations
                         .HasForeignKey("DepartementId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("TE_trsprt_remake.Models.Plant", null)
+                        .WithMany("Users")
+                        .HasForeignKey("PlantId");
 
                     b.Navigation("Departement");
                 });
@@ -366,9 +366,9 @@ namespace TE_trsprt_remake.Migrations
 
             modelBuilder.Entity("TE_trsprt_remake.Models.Plant", b =>
                 {
-                    b.Navigation("Cars");
-
                     b.Navigation("UserPlants");
+
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("TE_trsprt_remake.Models.Request", b =>

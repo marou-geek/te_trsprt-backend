@@ -14,7 +14,7 @@ namespace TE_trsprt_remake.DTOs
 
         public string LicensePlate { get; set; }
 
-        public string PlantId { get; set; }
+        public int PlantId { get; set; }
 
         public string Condition { get; set; }
     }

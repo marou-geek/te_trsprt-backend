@@ -10,17 +10,41 @@ namespace TE_trsprt_remake.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Plant> Plants { get; set; }
         public DbSet<Departement> Departements { get; set; }
-        public DbSet<Car> Cars { get; set; }
-      
+        public virtual DbSet<Car> Cars { get; set; }
         public DbSet<Request> Requests { get; set; }
-
         public DbSet<Approval> Approvals { get; set; }
+        public DbSet<UserPlant> UserPlants { get; set; } 
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+
             modelBuilder.Entity<User>(entity =>
             {
                 entity.HasIndex(e => e.Email).IsUnique();
             });
+
+            modelBuilder.Entity<UserPlant>(entity =>
+            {
+                entity.HasKey(up => up.Id);
+
+                entity.HasOne(up => up.User)
+                      .WithMany(u => u.UserPlants)
+                      .HasForeignKey(up => up.UserId);
+
+                entity.HasOne(up => up.Plant)
+                      .WithMany(p => p.UserPlants)
+                      .HasForeignKey(up => up.PlantId);
+            });
+
+            modelBuilder.Entity<Car>(entity =>
+            {
+                entity.HasOne(c => c.Plant)
+               .WithMany(p => p.Cars)
+               .HasForeignKey(c => c.PlantId);
+            }
+            );
+
 
         }
     }
