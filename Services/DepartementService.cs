@@ -34,13 +34,23 @@ namespace TE_trsprt_remake.Services
 
         public async Task<bool> DeleteDepartement(long id)
         {
-            var dep = await _context.Departements.FirstOrDefaultAsync(dep => dep.Id == id);
+            var dep = await _context.Departements
+                           .Include(d => d.Users)
+                           .FirstOrDefaultAsync(dep => dep.Id == id);
             if (dep == null)
             {
                 return false;
             }
+
+            
+            foreach (var user in dep.Users)
+            {
+                user.DepartementId = null;
+            }
+
             _context.Departements.Remove(dep);
             await _context.SaveChangesAsync();
+
             return true;
         }
 

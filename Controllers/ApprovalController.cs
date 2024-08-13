@@ -40,9 +40,9 @@ namespace TE_trsprt_remake.Controllers
         }
 
         [HttpPost("{status}/{id}")]
-        public async Task<IActionResult> SetApprovalStatus(string status, long id)
+        public async Task<IActionResult> SetApprovalStatus(string status, long id , string comment = null)
         {
-            bool isStatusChanged = await _approvalService.SetApprovalStatus(status, id);
+            bool isStatusChanged = await _approvalService.SetApprovalStatus(status, id , comment);
             if (isStatusChanged)
             {
                 return NoContent();

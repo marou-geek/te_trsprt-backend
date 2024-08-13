@@ -73,7 +73,7 @@ namespace TE_trsprt_remake.Services
             return true;
         }
 
-        public async Task<bool> SetApprovalStatus(string status, long id)
+        public async Task<bool> SetApprovalStatus(string status, long id , string comment = null)
         {
             var approval = await _context.Approvals.FirstOrDefaultAsync(a => a.Id == id);
             if (approval == null)
@@ -82,29 +82,30 @@ namespace TE_trsprt_remake.Services
             }
 
             approval.Status = status;
+            approval.Comment = comment; 
+
             await _context.SaveChangesAsync();
 
-            if (status == "SvApproved")
+            switch (status)
             {
-                await HandleSvApproved(approval.RequestId);
-            }
-            else if (status == "SvRejected")
-            {
-                await HandleSvRejected(approval.RequestId);
-            }
-            else if (status == "HrApproved")
-            {
-                await HandleHrApproved(approval.RequestId);
-            }
-            else if (status == "HrRejected")
-            {
-                await HandleHrRejected(approval.RequestId);
+                case "SvApproved":
+                    await HandleSvApproved(approval.RequestId, comment);
+                    break;
+                case "SvRejected":
+                    await HandleSvRejected(approval.RequestId, comment);
+                    break;
+                case "HrApproved":
+                    await HandleHrApproved(approval.RequestId, comment);
+                    break;
+                case "HrRejected":
+                    await HandleHrRejected(approval.RequestId, comment);
+                    break;
             }
 
             return true;
         }
 
-        public async Task HandleSvApproved(int requestId)
+        public async Task HandleSvApproved(int requestId,string comment)
         {
             var approvals = await _context.Approvals.Where(a => a.RequestId == requestId).ToListAsync();
             var svApproval = approvals.FirstOrDefault(a => a.Position == "SV");
@@ -112,13 +113,14 @@ namespace TE_trsprt_remake.Services
             if (svApproval != null)
             {
                 svApproval.Status = "SvApproved";
+                svApproval.Comment = comment;
                 await _context.SaveChangesAsync();
             }
 
             await CreateHrApproval(requestId);
         }
 
-        public async Task HandleSvRejected(int requestId)
+        public async Task HandleSvRejected(int requestId, string comment)
         {
             var approvals = await _context.Approvals.Where(a => a.RequestId == requestId).ToListAsync();
             var svApproval = approvals.FirstOrDefault(a => a.Position == "SV");
@@ -126,6 +128,7 @@ namespace TE_trsprt_remake.Services
             if (svApproval != null)
             {
                 svApproval.Status = "SvRejected";
+                svApproval.Comment = comment;
                 await _context.SaveChangesAsync();
             }
 
@@ -137,7 +140,7 @@ namespace TE_trsprt_remake.Services
             }
         }
 
-        public async Task HandleHrApproved(int requestId)
+        public async Task HandleHrApproved(int requestId,string comment)
         {
             var hrApproval = await _context.Approvals
                 .Where(a => a.RequestId == requestId && a.Position == "HR")
@@ -146,6 +149,7 @@ namespace TE_trsprt_remake.Services
             if (hrApproval != null)
             {
                 hrApproval.Status = "HrApproved";
+                hrApproval.Comment = comment;
                 await _context.SaveChangesAsync();
             }
 
@@ -157,7 +161,7 @@ namespace TE_trsprt_remake.Services
             }
         }
 
-        public async Task HandleHrRejected(int requestId)
+        public async Task HandleHrRejected(int requestId,string comment)
         {
             var approvals = await _context.Approvals.Where(a => a.RequestId == requestId).ToListAsync();
             var hrApproval = approvals.FirstOrDefault(a => a.Position == "HR");
@@ -165,6 +169,7 @@ namespace TE_trsprt_remake.Services
             if (hrApproval != null)
             {
                 hrApproval.Status = "HrRejected";
+                hrApproval.Comment = comment;
                 await _context.SaveChangesAsync();
             }
 

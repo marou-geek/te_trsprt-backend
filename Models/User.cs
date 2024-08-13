@@ -22,7 +22,7 @@ namespace TE_trsprt_remake.Models
         public string Email { get; set; }
 
         [ForeignKey("Departement")]
-        public int DepartementId { get; set; }
+        public int? DepartementId { get; set; }
 
         public string Password { get; set; }
 

@@ -18,7 +18,7 @@ namespace TE_trsprt_remake.Models
 
         public string Status { get; set; }
 
-        public string Comment { get; set; }
+        public string? Comment { get; set; }
 
         public DateTime CreatedAt { get; set; }
 

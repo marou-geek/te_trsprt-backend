@@ -40,7 +40,7 @@ namespace TE_trsprt_remake.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser(long id)
+        public async Task<IActionResult> DeleteDepartement(long id)
         {
 
             bool isDeleted = await _depservice.DeleteDepartement(id);
