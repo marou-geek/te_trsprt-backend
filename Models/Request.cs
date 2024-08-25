@@ -34,6 +34,8 @@ namespace TE_trsprt_remake.Models
 
         public virtual ICollection<Approval> Approvals { get; set; }
 
+        public virtual ICollection<GuardPost> GuardPosts { get; set; }
+
 
 
     }

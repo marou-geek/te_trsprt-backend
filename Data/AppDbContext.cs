@@ -13,6 +13,7 @@ namespace TE_trsprt_remake.Data
         public virtual DbSet<Car> Cars { get; set; }
         public DbSet<Request> Requests { get; set; }
         public DbSet<Approval> Approvals { get; set; }
+        public DbSet<GuardPost> GuardPosts { get; set; }
         public DbSet<UserPlant> UserPlants { get; set; } 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
