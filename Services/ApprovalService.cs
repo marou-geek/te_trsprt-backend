@@ -73,7 +73,7 @@ namespace TE_trsprt_remake.Services
             return true;
         }
 
-        public async Task<bool> SetApprovalStatus(string status, long id , string comment = null)
+        public async Task<bool> SetApprovalStatus(string status, long id, string comment = null)
         {
             var approval = await _context.Approvals.FirstOrDefaultAsync(a => a.Id == id);
             if (approval == null)
@@ -82,7 +82,7 @@ namespace TE_trsprt_remake.Services
             }
 
             approval.Status = status;
-            approval.Comment = comment; 
+            approval.Comment = comment;
 
             await _context.SaveChangesAsync();
 
@@ -105,14 +105,14 @@ namespace TE_trsprt_remake.Services
             return true;
         }
 
-        public async Task HandleSvApproved(int requestId,string comment)
+        public async Task HandleSvApproved(int requestId, string comment)
         {
             var approvals = await _context.Approvals.Where(a => a.RequestId == requestId).ToListAsync();
             var svApproval = approvals.FirstOrDefault(a => a.Position == "SV");
 
             if (svApproval != null)
             {
-                svApproval.Status = "SvApproved";
+                svApproval.Status = "Approved";
                 svApproval.Comment = comment;
                 await _context.SaveChangesAsync();
             }
@@ -127,7 +127,7 @@ namespace TE_trsprt_remake.Services
 
             if (svApproval != null)
             {
-                svApproval.Status = "SvRejected";
+                svApproval.Status = "Rejected";
                 svApproval.Comment = comment;
                 await _context.SaveChangesAsync();
             }
@@ -140,7 +140,7 @@ namespace TE_trsprt_remake.Services
             }
         }
 
-        public async Task HandleHrApproved(int requestId,string comment)
+        public async Task HandleHrApproved(int requestId, string comment)
         {
             var hrApproval = await _context.Approvals
                 .Where(a => a.RequestId == requestId && a.Position == "HR")
@@ -148,7 +148,7 @@ namespace TE_trsprt_remake.Services
 
             if (hrApproval != null)
             {
-                hrApproval.Status = "HrApproved";
+                hrApproval.Status = "Approved";
                 hrApproval.Comment = comment;
                 await _context.SaveChangesAsync();
             }
@@ -161,14 +161,14 @@ namespace TE_trsprt_remake.Services
             }
         }
 
-        public async Task HandleHrRejected(int requestId,string comment)
+        public async Task HandleHrRejected(int requestId, string comment)
         {
             var approvals = await _context.Approvals.Where(a => a.RequestId == requestId).ToListAsync();
             var hrApproval = approvals.FirstOrDefault(a => a.Position == "HR");
 
             if (hrApproval != null)
             {
-                hrApproval.Status = "HrRejected";
+                hrApproval.Status = "Rejected";
                 hrApproval.Comment = comment;
                 await _context.SaveChangesAsync();
             }
@@ -196,7 +196,7 @@ namespace TE_trsprt_remake.Services
             var hrUser = await _context.Users
                 .Where(u => u.UserPlants.Any(up => up.PlantId == request.User.UserPlants.First().PlantId) && u.Role == "HR")
                 .FirstOrDefaultAsync();
-
+              
             if (hrUser != null)
             {
                 var hrApproval = new Approval
@@ -204,7 +204,7 @@ namespace TE_trsprt_remake.Services
                     ApproverId = hrUser.Id,
                     RequestId = request.Id,
                     Position = "HR",
-                    Status = "HrPending",
+                    Status = "Pending",
                     Comment = "",
                     CreatedAt = DateTime.UtcNow,
                 };
@@ -212,13 +212,26 @@ namespace TE_trsprt_remake.Services
                 _context.Approvals.Add(hrApproval);
                 await _context.SaveChangesAsync();
 
-                
+
                 var subject = "New Request for Approval";
-                var body = $"Dear {hrUser.FullName},<br><br>You have a new request to approve.<br>Details:<br>From: {request.FromDestination}<br>To: {request.ToDestination}<br>From Date: {request.FromDate}<br>To Date: {request.ToDate}<br><br>Best regards,<br>Your Team";
+                var body = $@"
+                            Dear {hrUser.FullName},<br><br>
+                            You have received a new request that requires your approval. Below are the details of the request:<br><br>
+                            <strong>Request Details:</strong><br>
+                            <strong>From:</strong> {request.FromDestination}<br>
+                            <strong>To:</strong> {request.ToDestination}<br>
+                            <strong>From Date:</strong> {request.FromDate:MMMM dd, yyyy}<br>
+                            <strong>To Date:</strong> {request.ToDate:MMMM dd, yyyy}<br><br>
+                            <strong>Request Created At:</strong> {request.CreatedAt}<br><br>
+                            Please log in to the system for more details about the request.<br><br>
+                            If you have any questions or need further assistance, please contact the Administrations.<br><br>
+                            Best regards,<br>
+                            TE Connectivity
+                            ";
                 await _emailService.SendEmailAsync(hrUser.Email, subject, body);
             }
         }
 
-        
+
     }
 }

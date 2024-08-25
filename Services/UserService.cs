@@ -61,12 +61,15 @@ namespace TE_trsprt_remake.Services
 
         public async Task<bool> UpdateUser(UserDTO user, long id)
         {
-            var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
+           
+            var existingUser = await _context.Users.Include(u => u.UserPlants)
+                                                   .FirstOrDefaultAsync(u => u.Id == id);
             if (existingUser == null)
             {
                 return false;
             }
 
+           
             existingUser.TE_Id = user.TE_Id;
             existingUser.FullName = user.FullName;
             existingUser.Title = user.Title;
@@ -77,22 +80,25 @@ namespace TE_trsprt_remake.Services
             existingUser.Address = user.Address;
             existingUser.Role = user.Role;
 
-            var existingUserPlants = _context.UserPlants.Where(up => up.UserId == (int)id);
-            _context.UserPlants.RemoveRange(existingUserPlants);
+  
+            _context.UserPlants.RemoveRange(existingUser.UserPlants);
 
+            
             foreach (var plantId in user.PlantIds)
             {
                 var userPlant = new UserPlant
                 {
-                    UserId = (int)id,
+                    UserId = existingUser.Id,
                     PlantId = plantId
                 };
                 _context.UserPlants.Add(userPlant);
             }
 
+      
             await _context.SaveChangesAsync();
             return true;
         }
+
 
         public async Task<bool> AddUser(UserDTO userDto)
         {

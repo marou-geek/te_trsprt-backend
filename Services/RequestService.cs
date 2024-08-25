@@ -93,16 +93,30 @@ namespace TE_trsprt_remake.Services
             var requester = await _context.Users.FindAsync(request.RequesterId);
             if (requester != null && !string.IsNullOrEmpty(requester.SvEmail))
             {
-                var subject = "New Request Created";
-                var body = $"Dear {requester.FullName},<br><br>Your request has been created successfully.<br>Details:<br>From: {request.FromDestination}<br>To: {request.ToDestination}<br>From Date: {request.FromDate}<br>To Date: {request.ToDate}<br><br>Best regards,<br>Your Team";
-                await _emailService.SendEmailAsync(requester.SvEmail, subject, body);
+                var Car = await _context.Cars.FirstOrDefaultAsync(c => c.Id == request.CarId);
                 var Sv = await _context.Users.FirstOrDefaultAsync(u => u.Email == requester.SvEmail);
+                var subject = "New Request Created";
+                var body = $@"
+                        Dear {Sv.FullName},<br><br>
+                        A new request has been submitted by {requester.FullName} and requires your review and approval. Below are the details of the request:<br><br>
+                        <strong>Request Details:</strong><br>
+                        <strong>From:</strong> {request.FromDestination}<br>
+                        <strong>To:</strong> {request.ToDestination}<br>
+                        <strong>From Date:</strong> {request.FromDate:MMMM dd, yyyy}<br>
+                        <strong>To Date:</strong> {request.ToDate:MMMM dd, yyyy}<br><br>
+                        <strong>Request Created At:</strong> {request.CreatedAt}<br><br>
+                        Please log in to the system for more details of the request.<br><br>
+                        If you have any questions or need further assistance, please contact the Administration.<br><br>
+                        Best regards,<br>
+                        TE Connectivity
+                        ";
+                await _emailService.SendEmailAsync(requester.SvEmail, subject, body);
                 var Approval = new Approval
                 {
                     ApproverId = Sv.Id,
                     RequestId = request.Id,
                     Position = "SV",
-                    Status = "SVPending",
+                    Status = "Pending",
                     Comment = "",
                     CreatedAt = request.CreatedAt,
                 };

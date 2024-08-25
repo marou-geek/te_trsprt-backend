@@ -22,6 +22,10 @@ namespace TE_trsprt_remake.Services
             _configuration = configuration;
         }
 
+
+       
+
+
         public async Task<string> LoginAsync(LoginDTO model)
         {
             var user = await _context.Users.FirstOrDefaultAsync(u => u.TE_Id == model.TE_Id);

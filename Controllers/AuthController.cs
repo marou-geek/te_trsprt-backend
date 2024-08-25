@@ -7,10 +7,12 @@ using TE_trsprt_remake.Services;
 public class AuthController : ControllerBase
 {
     private readonly IAuthService _authService;
+    private readonly IEmailService _emailservice;
 
-    public AuthController(IAuthService authService)
+    public AuthController(IAuthService authService, IEmailService emailservice)
     {
         _authService = authService;
+        _emailservice = emailservice;
     }
 
     [HttpPost("login")]
@@ -32,4 +34,8 @@ public class AuthController : ControllerBase
 
         return Ok(new { Token = token });
     }
+
+
+  
+
 }
