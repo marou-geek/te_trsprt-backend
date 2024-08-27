@@ -35,7 +35,32 @@ public class AuthController : ControllerBase
         return Ok(new { Token = token });
     }
 
+    [HttpPost("forgotpassword")]
+    public async Task<IActionResult> ForgotPassword([FromBody] PasswordResetRequestDTO request)
+    {
+        
 
-  
+        var result = await _authService.GenerateAndSendResetPasswordRequestAsync(request.Email);
+        if (!result)
+            return NotFound("User with this email does not exist.");
+
+        return Ok("Password reset request has been sent to the supervisor.");
+    }
+
+    [HttpGet("resetpassword")]
+    public async Task<IActionResult> ResetPassword([FromQuery] string token)
+    {
+        if (string.IsNullOrWhiteSpace(token))
+            return BadRequest("Invalid token.");
+
+        var result = await _authService.ResetPasswordBySupervisorAsync(token);
+        if (!result)
+            return BadRequest("Invalid token or password reset failed.");
+
+        return Ok("Password has been reset and sent to the user.");
+    }
+
+
+
 
 }

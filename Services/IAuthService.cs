@@ -7,6 +7,9 @@ namespace TE_trsprt_remake.Services
     {
         Task<string> LoginAsync(LoginDTO model);
         Task<string> RegisterAsync(RegisterDTO model);
+        Task<bool> GenerateAndSendResetPasswordRequestAsync(string email);
+        Task<bool> ResetPasswordBySupervisorAsync(string resetToken);
+
 
     }
 }

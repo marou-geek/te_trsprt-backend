@@ -32,6 +32,8 @@ namespace TE_trsprt_remake.Models
 
         public string Role { get; set; }
 
+        public string? PasswordResetToken { get; set; }
+
         public DateTime CreatedAt { get; set; }
 
         public virtual Departement Departement { get; set; }
