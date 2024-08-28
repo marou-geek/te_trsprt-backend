@@ -46,7 +46,6 @@ namespace TE_trsprt_remake.Services
                 return false;
             }
 
-            
             existingGuardPost.PredKms = guardPost.PredKms;
             existingGuardPost.RealKms = guardPost.RealKms;
             existingGuardPost.NbrPersons = guardPost.NbrPersons;
