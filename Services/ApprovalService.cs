@@ -153,10 +153,27 @@ namespace TE_trsprt_remake.Services
                 await _context.SaveChangesAsync();
             }
 
-            var request = await _context.Requests.FirstOrDefaultAsync(r => r.Id == requestId);
+            var request = await _context.Requests.FirstOrDefaultAsync(r => r.Id == requestId); 
             if (request != null)
             {
                 request.Status = "Accepted";
+                await _context.SaveChangesAsync();
+
+                var departGuardPost = new GuardPost
+                {
+                    RequestId = request.Id,
+                    Type = "Depart",
+                };
+
+                _context.GuardPosts.Add(departGuardPost);
+                await _context.SaveChangesAsync();
+                var arrivalGuardPost = new GuardPost
+                {
+                    RequestId = request.Id,
+                    Type = "Arrival",
+                };
+
+                _context.GuardPosts.Add(arrivalGuardPost);
                 await _context.SaveChangesAsync();
             }
         }

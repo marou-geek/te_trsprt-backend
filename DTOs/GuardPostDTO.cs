@@ -9,6 +9,7 @@ namespace TE_trsprt_remake.DTOs
         public int Id { get; set; }
         public int RequestId { get; set; }
         public float PredKms { get; set; }
+        public float RealKms { get; set; }
         public int NbrPersons { get; set; }
         public string FuelLevel { get; set; }
         public bool RegCard { get; set; }
@@ -20,6 +21,8 @@ namespace TE_trsprt_remake.DTOs
         public string ExCondition { get; set; }
         public string IntCondition { get; set; }
         public string MechCondition { get; set; }
+        public string Type { get; set; }
+        public DateTime CreatedAt { get; set; }
 
     }
 }

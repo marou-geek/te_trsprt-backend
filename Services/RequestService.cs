@@ -90,6 +90,8 @@ namespace TE_trsprt_remake.Services
             _context.Requests.Add(request);
             await _context.SaveChangesAsync();
 
+
+
             var requester = await _context.Users.FindAsync(request.RequesterId);
             if (requester != null && !string.IsNullOrEmpty(requester.SvEmail))
             {
