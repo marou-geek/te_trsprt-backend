@@ -47,6 +47,8 @@ namespace TE_trsprt_remake.Services
             return true;
         }
 
+
+
         public async Task<bool> SetRole(string Role, long id)
         {
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
@@ -57,6 +59,26 @@ namespace TE_trsprt_remake.Services
             user.Role = Role;
             await _context.SaveChangesAsync();
             return true;
+        }
+
+
+        public async Task<bool> SetPassword(long id, string currentpassword , string newpassword)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
+            if (user == null)
+            {
+                return false;
+            }
+
+            if (!BCrypt.Net.BCrypt.Verify(currentpassword, user.Password))
+            {
+                return false; 
+            }
+
+            user.Password = BCrypt.Net.BCrypt.HashPassword(newpassword);
+            await _context.SaveChangesAsync();
+            return true;
+
         }
 
         public async Task<bool> UpdateUser(UserDTO user, long id)

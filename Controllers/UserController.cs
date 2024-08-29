@@ -71,6 +71,19 @@ namespace TE_trsprt_remake.Controllers
             }
         }
 
+        [HttpPost("update-password")]
+        public async Task<IActionResult> UpdatePassword(long userId, string currentPassword, string newPassword)
+        {
+            var result = await _userservice.SetPassword(userId, currentPassword, newPassword);
+
+            if (!result)
+            {
+                return BadRequest("Current password is incorrect or user not found.");
+            }
+
+            return Ok("Password updated successfully.");
+        }
+
         [HttpPut("{id}")]
 
         public async Task<IActionResult> UpdateUser(long id, [FromBody] UserDTO user)
