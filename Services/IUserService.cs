@@ -9,6 +9,7 @@ namespace TE_trsprt_remake.Services
     {
         Task<bool> SetAccountStatus(String AccountStatus , long id);
         Task<bool> SetRole(String Role, long id);
+        Task<bool> SetPassword(long id, string currentpassword, string newpassword);
         Task<ActionResult<IEnumerable<User>>> GetUsers();
         Task<bool> UpdateUser(UserDTO user, long id);
         Task<bool> DeleteUser (long id);
