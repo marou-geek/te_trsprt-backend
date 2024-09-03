@@ -30,9 +30,31 @@ namespace TE_trsprt_remake.Services
                                  .ToListAsync();
         }
 
-        public async Task<bool> AddGuardPost(GuardPost guardPost)
+        public async Task<bool> AddGuardPost(GuardPostDTO guardPost)
         {
-            _context.GuardPosts.Add(guardPost);
+
+            var newgardPost = new GuardPost
+            {
+                RequestId = guardPost.RequestId,
+                PredKms = guardPost.PredKms,
+                RealKms = guardPost.RealKms,
+                NbrPersons = guardPost.NbrPersons,
+                Company = guardPost.Company,
+                FuelLevel = guardPost.FuelLevel,
+                RegCard = guardPost.RegCard,
+                Insurance = guardPost.Insurance,
+                CarHealthCert = guardPost.CarHealthCert,
+                Vignette = guardPost.Vignette,
+                FuelCard = guardPost.FuelCard,
+                Accessories = guardPost.Accessories,
+                ExCondition = guardPost.ExCondition,
+                IntCondition = guardPost.IntCondition,
+                MechCondition = guardPost.MechCondition,
+                Type = guardPost.Type,
+                CreatedAt = guardPost.CreatedAt,
+            };
+
+            _context.GuardPosts.Add(newgardPost);
             await _context.SaveChangesAsync();
             return true;
         }
@@ -49,6 +71,7 @@ namespace TE_trsprt_remake.Services
             existingGuardPost.PredKms = guardPost.PredKms;
             existingGuardPost.RealKms = guardPost.RealKms;
             existingGuardPost.NbrPersons = guardPost.NbrPersons;
+            existingGuardPost.Company = guardPost.Company;
             existingGuardPost.FuelLevel = guardPost.FuelLevel;
             existingGuardPost.RegCard = guardPost.RegCard;
             existingGuardPost.Insurance = guardPost.Insurance;

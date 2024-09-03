@@ -10,6 +10,6 @@ namespace TE_trsprt_remake.Services
         Task<bool> UpdateGuardPost(GuardPostDTO guardPost, long id);
         Task<bool> DeleteGuardPost(long id);
         Task<IEnumerable<GuardPost>> GetGuardPostByRequestId(long reqid);
-        Task<bool> AddGuardPost(GuardPost guardPost);
+        Task<bool> AddGuardPost(GuardPostDTO guardPost);
     }
 }

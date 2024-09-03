@@ -40,7 +40,7 @@ namespace TE_trsprt_remake.Controllers
 
         
         [HttpPost]
-        public async Task<ActionResult> AddGuardPost([FromBody] GuardPost guardPost)
+        public async Task<ActionResult> AddGuardPost([FromBody] GuardPostDTO guardPost)
         {
             var success = await _guardPostService.AddGuardPost(guardPost);
             if (!success)

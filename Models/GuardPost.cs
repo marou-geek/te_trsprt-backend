@@ -10,10 +10,10 @@ namespace TE_trsprt_remake.Models
 
         [ForeignKey("Request")]
         public int RequestId { get; set; }
-
         public float? PredKms { get; set; }
         public float? RealKms { get; set; }
         public int? NbrPersons { get; set; }
+        public string? Company {  get; set; }
         public string? FuelLevel { get; set; }
         public bool? RegCard { get; set; }
         public bool? Insurance { get; set; }

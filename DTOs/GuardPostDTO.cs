@@ -11,6 +11,7 @@ namespace TE_trsprt_remake.DTOs
         public float PredKms { get; set; }
         public float RealKms { get; set; }
         public int NbrPersons { get; set; }
+        public string Company { get; set; }
         public string FuelLevel { get; set; }
         public bool RegCard { get; set; }
         public bool Insurance { get; set; }

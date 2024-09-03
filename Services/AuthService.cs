@@ -126,7 +126,7 @@ namespace TE_trsprt_remake.Services
                 return false;
 
             var resetToken = Guid.NewGuid().ToString();
-            var resetUrl = $"http://localhost:4200/resetpassword?token={resetToken}";
+            var resetUrl = $"http://localhost:4200/reset-password?token={resetToken}";
 
             user.PasswordResetToken = resetToken;
             await _context.SaveChangesAsync();
