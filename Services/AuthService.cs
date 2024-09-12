@@ -58,7 +58,6 @@ namespace TE_trsprt_remake.Services
                 SvEmail = "",
                 DepartementId = model.DepartementId,
                 AccountStatus = "pending",
-                Address = model.Address,
                 Role = "user",
                 CreatedAt = DateTime.Now
             };
