@@ -28,8 +28,6 @@ namespace TE_trsprt_remake.Models
 
         public string AccountStatus { get; set; }
 
-        public string Address { get; set; }
-
         public string Role { get; set; }
 
         public string? PasswordResetToken { get; set; }

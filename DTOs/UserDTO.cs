@@ -13,7 +13,6 @@
         public DateTime CreatedAt { get; set; }
         public List<int> PlantIds { get; set; } 
         public int DepartementId { get; set; }
-        public string Address { get; set; }
         public List<PlantDTO> Plants { get; set; } 
 
     }
