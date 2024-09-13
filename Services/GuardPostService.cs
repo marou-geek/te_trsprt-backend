@@ -51,6 +51,7 @@ namespace TE_trsprt_remake.Services
                 IntCondition = guardPost.IntCondition,
                 MechCondition = guardPost.MechCondition,
                 Type = guardPost.Type,
+                CheckDate = guardPost.CheckDate,
                 CreatedAt = guardPost.CreatedAt,
             };
 
@@ -84,6 +85,7 @@ namespace TE_trsprt_remake.Services
             existingGuardPost.MechCondition = guardPost.MechCondition;
             existingGuardPost.Type = guardPost.Type;
             existingGuardPost.CreatedAt = guardPost.CreatedAt;
+            existingGuardPost.CheckDate = guardPost.CheckDate;
 
             _context.GuardPosts.Update(existingGuardPost);
             await _context.SaveChangesAsync();

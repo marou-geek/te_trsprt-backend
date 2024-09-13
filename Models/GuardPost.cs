@@ -24,6 +24,7 @@ namespace TE_trsprt_remake.Models
         public string? ExCondition { get; set; }  
         public string? IntCondition { get; set; }  
         public string? MechCondition { get; set; }
+        public DateTime? CheckDate { get; set; }
         public string Type { get; set; }
         public DateTime CreatedAt { get; set; }
         public virtual Request Request { get; set; }

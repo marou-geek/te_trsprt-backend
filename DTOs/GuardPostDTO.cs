@@ -24,6 +24,7 @@ namespace TE_trsprt_remake.DTOs
         public string MechCondition { get; set; }
         public string Type { get; set; }
         public DateTime CreatedAt { get; set; }
+        public DateTime CheckDate { get; set; }
 
     }
 }
